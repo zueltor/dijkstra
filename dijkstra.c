@@ -69,7 +69,7 @@ void dijkstra(char *in, char *out) {
                 free_graph(G);
                 errors(4);
                 return;
-            } else if (length < 0 || length > INT_MAX) {
+            } else if (length < 0) {
                 free_graph(G);
                 errors(5);
                 return;
@@ -81,7 +81,8 @@ void dijkstra(char *in, char *out) {
         }
         if (v1 < v2)
             G->Adj[v2][v1] = length;
-        else G->Adj[v1][v2] = length;
+        else
+            G->Adj[v1][v2] = length;
     }
 
     int *visited_vertices = (int *) malloc((G->V + 1) * sizeof(int));
@@ -117,11 +118,11 @@ void dijkstra(char *in, char *out) {
             break;
         for (j = 1; j <= G->V; j++) {
             if (j < v) {
-            v2 = j;
-            v1 = v;
+                v2 = j;
+                v1 = v;
             } else {
-               v2 = v;
-               v1 = j;
+                v2 = v;
+                v1 = j;
             }
             if (G->Adj[v1][v2] > 0) {
                 cur_distance = G->Adj[v1][v2] + dist[v].length;
@@ -169,12 +170,14 @@ void dijkstra(char *in, char *out) {
             printf("%d ", v);
 
         } while (v != start);
-    } else printf("overflow\n");
-
+    } else
+        printf("overflow\n");
 
     free(visited_vertices);
     free(dist);
     free_graph(G);
+    fclose(f1);
+    fclose(f2);
 }
 
 Graph *create_graph(unsigned int n_vertices, unsigned int n_edges) {
@@ -219,13 +222,6 @@ void errors(int err) {
         case 6:
             printf("bad number of lines");
             break;
-        case 7:
-            printf("bad vertex");
-            break;
         default:;
     }
-}
-
-void print_help(void) {
-    printf("Dijkstra: <inputfile> <outputfile>");
 }
