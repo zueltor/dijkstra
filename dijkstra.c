@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+#define OVERFLOW (unsigned int)INT_MAX+1
 
 
 void dijkstra(char *in, char *out) {
